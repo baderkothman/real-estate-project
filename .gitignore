@@ -1,0 +1,26 @@
+# Secrets
+config.php
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Composer deps
+/vendor/
+
+# User uploads
+/uploads/
+
+# Logs / temp
+*.log
+*.sql
+*.zip
+*.rar
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
