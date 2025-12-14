@@ -5,7 +5,7 @@ $TESTIMONIALS = [
         'name'     => 'Rami K.',
         'location' => 'Tripoli',
         'role'     => 'Student & first-time renter',
-        'text'     => 'Hijazi Real Estate helped me quickly find a small studio near my university. The filters are simple and clear.',
+        'text'     => 'Othman Real Estate helped me quickly find a small studio near my university. The filters are simple and clear.',
         'rating'   => 5,
     ],
     [

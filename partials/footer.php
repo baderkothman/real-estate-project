@@ -58,8 +58,8 @@
                         </li>
                         <li>
                             <span>Email</span>
-                            <a href="mailto:support@hijazi-realestate.com">
-                                support@hijazi-realestate.com
+                            <a href="mailto:support@Othman-realestate.com">
+                                support@Othman-realestate.com
                             </a>
                         </li>
                         <li>

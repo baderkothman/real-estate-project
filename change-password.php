@@ -59,7 +59,7 @@ require_once __DIR__ . '/partials/header.php';
         <div>
             <h1 style="margin-bottom:0.25rem;">Change password</h1>
             <p style="margin:0;opacity:0.8;font-size:0.9rem;">
-                Update the password for your Hijazi Real Estate account.
+                Update the password for your Othman Real Estate account.
             </p>
         </div>
     </div>

@@ -3,7 +3,7 @@
 /**
  * login.php
  * -----------------------------
- * User login for Hijazi Real Estate.
+ * User login for Othman Real Estate.
  *
  * - User can log in using EMAIL or PHONE.
  * - Validates CSRF + basic fields.

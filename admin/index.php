@@ -34,7 +34,7 @@ require_once __DIR__ . '/../partials/header.php';
         <div>
             <h1 style="margin-bottom:0.25rem;">Admin dashboard</h1>
             <p style="margin:0;opacity:0.8;font-size:0.9rem;">
-                Overview of users and listings on Hijazi Real Estate.
+                Overview of users and listings on Othman Real Estate.
             </p>
         </div>
     </div>

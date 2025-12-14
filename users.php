@@ -174,7 +174,7 @@ require_once __DIR__ . '/partials/header.php';
         <div>
             <h1 style="margin-bottom:0.25rem;">Owners &amp; agents</h1>
             <p style="margin:0;opacity:0.8;font-size:0.9rem;">
-                Browse people listing properties on Hijazi Real Estate.
+                Browse people listing properties on Othman Real Estate.
             </p>
         </div>
     </div>

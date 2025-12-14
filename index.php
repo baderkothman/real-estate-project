@@ -3,7 +3,7 @@
 /**
  * index.php
  * --------------------------------------------------------------
- * Public home page for Hijazi Real Estate.
+ * Public home page for Othman Real Estate.
  *
  * Sections:
  *  - Hero + search form (guest vs logged-in layout)
@@ -446,7 +446,7 @@ require_once __DIR__ . '/partials/header.php';
             <div>
                 <h2 style="margin-bottom:0.25rem;">What people say</h2>
                 <p style="margin:0;opacity:0.8;font-size:0.9rem;">
-                    A few words from users who tried Hijazi Real Estate.
+                    A few words from users who tried Othman Real Estate.
                 </p>
             </div>
         </div>

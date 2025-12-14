@@ -3,7 +3,7 @@
 /**
  * register.php
  * -------------------------------------------
- * User registration for Hijazi Real Estate.
+ * User registration for Othman Real Estate.
  *
  * - Name, email, phone, password.
  * - Email + phone must be unique.

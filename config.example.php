@@ -31,7 +31,7 @@ const STRIPE_PRICE_AGENCY_YEAR    = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';   // $600 
  */
 
 // Project name (used in <title> or header if needed)
-const APP_NAME = 'Hijazi Real Estate';
+const APP_NAME = 'Othman Real Estate';
 
 /**
  * Base URL of the project.
@@ -61,7 +61,7 @@ const PROFILE_UPLOAD_URL = BASE_URL . '/uploads/profile';
 
 $DB_CONFIG = [
     'host'     => '127.0.0.1',
-    'dbname'   => 'hijazi_real_estate',
+    'dbname'   => 'Othman_real_estate',
     'username' => 'root',
     'password' => '',
     'charset'  => 'utf8mb4',
@@ -491,16 +491,16 @@ function incrementPropertyStat(int $propertyId, string $field, ?PDO $pdo = null)
  */
 function sendPasswordResetEmail(string $email, string $name, string $resetUrl): void
 {
-    $subject = 'Reset your Hijazi Real Estate password';
+    $subject = 'Reset your Othman Real Estate password';
 
     $message = "Hi {$name},\n\n"
-        . "We received a request to reset the password for your Hijazi Real Estate account.\n\n"
+        . "We received a request to reset the password for your Othman Real Estate account.\n\n"
         . "To choose a new password, click the link below (valid for 1 hour):\n"
         . "{$resetUrl}\n\n"
         . "If you didn’t request this, you can ignore this email.\n\n"
-        . "Hijazi Real Estate";
+        . "Othman Real Estate";
 
-    $headers = "From: Hijazi Real Estate <no-reply@hijazi-realestate.test>\r\n";
+    $headers = "From: Othman Real Estate <no-reply@Othman-realestate.test>\r\n";
 
     // Suppress warnings if mail is not configured
     @mail($email, $subject, $message, $headers);

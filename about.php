@@ -7,7 +7,7 @@ require_once __DIR__ . '/partials/testimonials-data.php';
 <section class="section-card">
     <div class="page-header" style="margin-bottom:1.25rem;">
         <div>
-            <h1 style="margin-bottom:0.25rem;">About Hijazi Real Estate</h1>
+            <h1 style="margin-bottom:0.25rem;">About Othman Real Estate</h1>
             <p style="margin:0;opacity:0.8;font-size:0.95rem;">
                 A Lebanese-focused platform for discovering and managing real-estate listings.
             </p>
@@ -15,7 +15,7 @@ require_once __DIR__ . '/partials/testimonials-data.php';
     </div>
 
     <p style="line-height:1.6;font-size:0.95rem;">
-        Hijazi Real Estate is a senior project built to explore how a modern web platform can
+        Othman Real Estate is a senior project built to explore how a modern web platform can
         support the Lebanese real-estate market. The goal is to provide a clean, secure, and
         localized experience for people who want to <strong>rent</strong>, <strong>buy</strong>,
         or <strong>list</strong> properties across Lebanon.

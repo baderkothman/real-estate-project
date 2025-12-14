@@ -322,7 +322,7 @@ $avatarUrl = !empty($user['profile_image'])
         <div>
             <h3 style="margin:0 0 0.4rem;font-size:0.96rem;">Change password</h3>
             <p style="margin:0 0 0.7rem;font-size:0.86rem;opacity:0.8;">
-                Update the password you use to sign in to Hijazi Real Estate.
+                Update the password you use to sign in to Othman Real Estate.
             </p>
             <a href="<?= BASE_URL ?>/change-password.php" class="btn btn-primary">
                 Change password

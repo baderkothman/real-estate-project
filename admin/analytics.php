@@ -65,7 +65,7 @@ require_once __DIR__ . '/../partials/header.php';
         <div>
             <h1 style="margin-bottom:0.25rem;">Analytics</h1>
             <p style="margin:0;opacity:0.8;font-size:0.9rem;">
-                High-level view of listings on Hijazi Real Estate.
+                High-level view of listings on Othman Real Estate.
             </p>
         </div>
     </div>

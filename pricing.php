@@ -18,7 +18,7 @@ $currentPlan = currentUserPlan(); // 'free', 'pro', 'agency'
                 Plans &amp; pricing
             </h1>
             <p class="hero__subtitle" style="margin:0;">
-                Choose the plan that matches how you use Hijazi Real Estate.
+                Choose the plan that matches how you use Othman Real Estate.
             </p>
             <?php if (isLoggedIn()): ?>
                 <p style="margin-top:0.4rem;font-size:var(--md-font-size-body-sm);color:var(--md-sys-color-on-surface-variant);">
