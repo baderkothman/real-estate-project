@@ -1,8 +1,8 @@
 <?php
-// profile-edit.php
-// --------------------------------------------------------------
-// Edit profile information + account security (change password)
-// --------------------------------------------------------------
+
+
+
+
 
 require_once __DIR__ . '/config.php';
 
@@ -31,7 +31,7 @@ if (!$user) {
     exit;
 }
 
-// Pre-fill form values
+
 $name  = $user['name']  ?? '';
 $email = $user['email'] ?? '';
 $phone = $user['phone'] ?? '';
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Please enter a valid phone number (digits, optional +).';
     }
 
-    // Check if email or phone is used by another account
+
     if (empty($errors)) {
         $stmtCheck = $pdo->prepare('
             SELECT id, email, phone
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Handle profile image upload (optional)
+
     $newProfileImage = null;
 
     if (
@@ -171,10 +171,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare($sql);
         $stmt->execute($params);
 
-        // Keep name in session in sync with profile
+
         $_SESSION['user_name'] = $name;
 
-        // refresh user array for the view
+
         $user['name']  = $name;
         $user['email'] = $email;
         $user['phone'] = $phone;

@@ -20,17 +20,17 @@ requireLogin();
 $pdo    = getPDO();
 $userId = currentUserId();
 
-// Plan + limits
+
 $plan   = currentUserPlan();        // e.g. "free", "pro", "agency"
 $limits = getPlanLimits($plan);     // from config.php
 
-// How many active properties the user already has
+
 $activeCount     = getUserActivePropertyCount($userId, $pdo);
 $remainingSlots  = max(0, $limits['max_properties'] - $activeCount);
 
 $errors = [];
 
-// Form values
+
 $title = $city = $address = $description = '';
 $type  = '';
 $price = $bedrooms = $bathrooms = $area = '';
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Invalid session token. Please try again.';
     }
 
-    // Re-check listing limit on POST
+
     $activeCount = getUserActivePropertyCount($userId, $pdo);
     if ($activeCount >= $limits['max_properties']) {
         $errors[] =
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'Please upgrade to post more properties.';
     }
 
-    // Read inputs
+
     $title       = trim($_POST['title'] ?? '');
     $city        = trim($_POST['city'] ?? '');
     $address     = trim($_POST['address'] ?? '');
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $area        = $_POST['area_sq_m'] ?? '';
     $description = trim($_POST['description'] ?? '');
 
-    // Basic validation (all required now)
+
     if ($title === '') {
         $errors[] = 'Title is required.';
     }
@@ -79,27 +79,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Please enter a valid price.';
     }
 
-    // Bedrooms: required, numeric, >= 0
+
     if ($bedrooms === '' || !is_numeric($bedrooms) || (int)$bedrooms < 0) {
         $errors[] = 'Please enter a valid number of bedrooms (0 or more).';
     }
 
-    // Bathrooms: required, numeric, >= 0
+
     if ($bathrooms === '' || !is_numeric($bathrooms) || (int)$bathrooms < 0) {
         $errors[] = 'Please enter a valid number of bathrooms (0 or more).';
     }
 
-    // Area: required, numeric, > 0
+
     if ($area === '' || !is_numeric($area) || (int)$area <= 0) {
         $errors[] = 'Please enter a valid area in square meters.';
     }
 
-    // Description required
+
     if ($description === '') {
         $errors[] = 'Description is required.';
     }
 
-    // Images: at least 1 required, and must respect plan limit
+
     $countImages = 0;
     if (!empty($_FILES['images']['name']) && is_array($_FILES['images']['name'])) {
         foreach ($_FILES['images']['name'] as $name) {
@@ -117,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ' images per listing. You selected ' . $countImages . '.';
     }
 
-    // If everything is valid -> insert
+
     if (empty($errors)) {
         $stmt = $pdo->prepare('
             INSERT INTO properties (
@@ -144,17 +144,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $propertyId = (int) $pdo->lastInsertId();
 
-        // Upload images (helper from config.php)
+
         if (!empty($_FILES['images'])) {
             storePropertyImages($propertyId, $_FILES['images'], $pdo);
         }
 
-        // Redirect to the property details page
+
         header('Location: ' . BASE_URL . '/property.php?id=' . $propertyId);
         exit;
     }
 
-    // Recalculate remaining slots for the info text
+
     $activeCount    = getUserActivePropertyCount($userId, $pdo);
     $remainingSlots = max(0, $limits['max_properties'] - $activeCount);
 }

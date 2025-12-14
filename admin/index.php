@@ -1,17 +1,17 @@
 <?php
-// admin/index.php
-// --------------------------------------------------------------
-// Admin dashboard
-// - Shows key counters for users & properties
-// - Accessible only to admin users (requireAdmin())
-// --------------------------------------------------------------
+
+
+
+
+
+
 
 require_once __DIR__ . '/../config.php';
 
 requireAdmin();
 $pdo = getPDO();
 
-// Basic counters
+
 $totalUsers      = (int) $pdo->query('SELECT COUNT(*) FROM users')->fetchColumn();
 $totalProperties = (int) $pdo->query('SELECT COUNT(*) FROM properties')->fetchColumn();
 $approvedProps   = (int) $pdo->query("SELECT COUNT(*) FROM properties WHERE status = 'approved'")->fetchColumn();
@@ -23,7 +23,7 @@ $featuredProps   = (int) $pdo->query("
       AND status = 'approved'
 ")->fetchColumn();
 
-// Optional: you can set a page title if later header uses it
+
 $pageTitle = 'Admin dashboard';
 
 require_once __DIR__ . '/../partials/header.php';

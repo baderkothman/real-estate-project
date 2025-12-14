@@ -1,5 +1,5 @@
 <?php
-// change-password.php
+
 require_once __DIR__ . '/config.php';
 
 requireLogin();

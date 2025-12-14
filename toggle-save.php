@@ -56,7 +56,7 @@ $respond = function (bool $success, string $message, ?bool $saved = null, ?int $
         exit;
     }
 
-    // Non-AJAX redirect
+
     header('Location: ' . $redirect);
     exit;
 };
@@ -143,7 +143,7 @@ if ($alreadySaved) {
     $savedNow = true;
     $msg      = 'Property added to saved.';
 
-    // 🔢 Analytics: count how many times this property has been saved.
+
     incrementPropertyStat($propertyId, 'saves', $pdo);
 }
 

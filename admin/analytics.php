@@ -1,11 +1,11 @@
 <?php
-// admin/analytics.php
-// --------------------------------------------------------------
-// Admin view: simple analytics
-// - Properties per status
-// - Properties per listing type (sale / rent)
-// - Top cities by number of approved properties
-// --------------------------------------------------------------
+
+
+
+
+
+
+
 
 require_once __DIR__ . '/../config.php';
 

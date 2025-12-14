@@ -1,5 +1,5 @@
 <?php
-// property-stats.php
+
 require_once __DIR__ . '/config.php';
 
 requireLogin();
@@ -12,7 +12,7 @@ if ($propertyId <= 0) {
     exit;
 }
 
-// Make sure the current user owns this property (or is admin)
+
 $stmt = $pdo->prepare('SELECT * FROM properties WHERE id = :id LIMIT 1');
 $stmt->execute([':id' => $propertyId]);
 $property = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -29,7 +29,7 @@ if (!isAdmin() && (int)$property['user_id'] !== currentUserId()) {
     exit;
 }
 
-// Stats for last 30 days
+
 $stmtStats = $pdo->prepare('
     SELECT stat_date, views, saves, contact_clicks
     FROM property_stats

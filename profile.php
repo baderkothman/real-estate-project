@@ -11,22 +11,22 @@ if (!$user || !$userId) {
     exit;
 }
 
-// Active tab
+
 $tab = $_GET['tab'] ?? 'mine';
 if (!in_array($tab, ['mine', 'sold', 'saved'], true)) {
     $tab = 'mine';
 }
 
-// Pagination config
+
 $perPage = 12;
 
-// -----------------------------
-// My (active) properties pagination (is_sold = 0)
-// -----------------------------
+
+
+
 $pageMine   = max(1, (int)($_GET['page_mine'] ?? 1));
 $offsetMine = ($pageMine - 1) * $perPage;
 
-// Count my active properties
+
 $countMineSql = '
     SELECT COUNT(*)
     FROM properties
@@ -42,7 +42,7 @@ if ($pageMine > $totalPagesMine) {
     $offsetMine = ($pageMine - 1) * $perPage;
 }
 
-// Fetch my active properties with cover image
+
 $sqlMine = '
     SELECT p.*,
            (
@@ -65,9 +65,9 @@ $stmtMine->bindValue(':offset', $offsetMine, PDO::PARAM_INT);
 $stmtMine->execute();
 $myProperties = $stmtMine->fetchAll(PDO::FETCH_ASSOC);
 
-// -----------------------------
-// Sold properties pagination (is_sold = 1)
-// -----------------------------
+
+
+
 $pageSold   = max(1, (int)($_GET['page_sold'] ?? 1));
 $offsetSold = ($pageSold - 1) * $perPage;
 
@@ -86,7 +86,7 @@ if ($pageSold > $totalPagesSold) {
     $offsetSold = ($pageSold - 1) * $perPage;
 }
 
-// Fetch sold properties
+
 $sqlSold = '
     SELECT p.*,
            (
@@ -109,13 +109,13 @@ $stmtSold->bindValue(':offset', $offsetSold, PDO::PARAM_INT);
 $stmtSold->execute();
 $soldProperties = $stmtSold->fetchAll(PDO::FETCH_ASSOC);
 
-// -----------------------------
-// Saved properties pagination
-// -----------------------------
+
+
+
 $pageSaved   = max(1, (int)($_GET['page_saved'] ?? 1));
 $offsetSaved = ($pageSaved - 1) * $perPage;
 
-// Count saved
+
 $countSavedSql = '
     SELECT COUNT(*)
     FROM saved_properties sp
@@ -133,7 +133,7 @@ if ($pageSaved > $totalPagesSaved) {
     $offsetSaved = ($pageSaved - 1) * $perPage;
 }
 
-// Fetch saved properties with cover image
+
 $sqlSaved = '
     SELECT p.*,
            (
@@ -158,7 +158,7 @@ $stmtSavedProps->bindValue(':offset', $offsetSaved, PDO::PARAM_INT);
 $stmtSavedProps->execute();
 $savedProperties = $stmtSavedProps->fetchAll(PDO::FETCH_ASSOC);
 
-// For marking Saved buttons
+
 $savedPropertyIds = [];
 $stmtSavedIds = $pdo->prepare('
     SELECT property_id
@@ -171,7 +171,7 @@ $savedPropertyIds = $stmtSavedIds->fetchAll(PDO::FETCH_COLUMN);
 $pageTitle = 'My profile';
 require_once __DIR__ . '/partials/header.php';
 
-// Helper for pagination buttons (inline, simple)
+
 function render_profile_pagination(
     string $tab,
     string $paramName,

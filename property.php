@@ -3,7 +3,7 @@ require_once __DIR__ . '/config.php';
 
 $pdo = getPDO();
 
-// Property ID from query
+
 $propertyId = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
 if ($propertyId <= 0) {
@@ -116,7 +116,6 @@ require_once __DIR__ . '/partials/header.php';
 ?>
 
 <style>
-    /* Tiny tweak for clickable thumbs */
     .gallery-thumb {
         cursor: pointer;
         transition: transform 0.12s ease, box-shadow 0.12s ease, outline-color 0.12s ease;
@@ -322,7 +321,7 @@ require_once __DIR__ . '/partials/header.php';
                 if (mainImg.tagName.toLowerCase() === 'img') {
                     mainImg.src = full;
                 } else {
-                    // Fallback if main is a div (no cover image originally)
+
                     mainImg.style.backgroundImage = 'url(' + full + ')';
                     mainImg.style.backgroundSize = 'cover';
                     mainImg.style.backgroundPosition = 'center';

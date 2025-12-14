@@ -1,19 +1,19 @@
 <?php
-// admin/properties.php
-// --------------------------------------------------------------
-// Admin view: manage properties
-// - Filter by status (pending / approved / rejected / all)
-// - Approve / reject listings
-// - Feature / unfeature approved listings
-// - Protected by requireAdmin()
-// --------------------------------------------------------------
+
+
+
+
+
+
+
+
 
 require_once __DIR__ . '/../config.php';
 
 requireAdmin();
 $pdo = getPDO();
 
-// Filter by status
+
 $status          = $_GET['status'] ?? 'pending';
 $allowedStatuses = ['all', 'pending', 'approved', 'rejected'];
 
@@ -21,7 +21,7 @@ if (!in_array($status, $allowedStatuses, true)) {
     $status = 'pending';
 }
 
-// Pagination
+
 $perPage = 25;
 $page    = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 if ($page < 1) {
@@ -41,7 +41,7 @@ if ($status !== 'all') {
     $params[':status'] = $status;
 }
 
-// Count total properties in this view
+
 $countSql = 'SELECT COUNT(*) ' . $sqlBase . $where;
 $stmtCount = $pdo->prepare($countSql);
 $stmtCount->execute($params);
@@ -53,7 +53,7 @@ if ($page > $totalPages) {
 }
 $offset = ($page - 1) * $perPage;
 
-// Fetch paginated properties
+
 $sql = '
     SELECT p.*,
            u.name  AS owner_name,
@@ -74,10 +74,10 @@ $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 $stmt->execute();
 $properties = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Pagination base URL (keep status)
+
 $paginationBaseUrl = BASE_URL . '/admin/properties.php?status=' . urlencode($status) . '&';
 
-// Read and clear admin flash message (if any)
+
 $adminFlash = $_SESSION['admin_flash'] ?? null;
 unset($_SESSION['admin_flash']);
 

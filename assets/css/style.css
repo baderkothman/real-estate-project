@@ -3,7 +3,7 @@
    Material 3-ish · Blue brand + warm accent · Light / Dark
    ===================================================================== */
 
-/* Google font */
+
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
 
 /* ---------------------------------------------------------------------
@@ -11,25 +11,25 @@
    --------------------------------------------------------------------- */
 
 :root {
-  /* Primary blue */
+
   --md-sys-color-primary: #146c94;
   --md-sys-color-on-primary: #ffffff;
   --md-sys-color-primary-container: #d3e7ff;
   --md-sys-color-on-primary-container: #00253a;
 
-  /* Secondary – indigo accent */
+
   --md-sys-color-secondary: #4f46e5;
   --md-sys-color-on-secondary: #ffffff;
   --md-sys-color-secondary-container: #e0e7ff;
   --md-sys-color-on-secondary-container: #111827;
 
-  /* Tertiary – warm orange accent */
+
   --md-sys-color-tertiary: #f97316;
   --md-sys-color-on-tertiary: #1f1300;
   --md-sys-color-tertiary-container: #ffedd5;
   --md-sys-color-on-tertiary-container: #4a1b00;
 
-  /* Background & surfaces */
+
   --md-sys-color-background: #f3f4fb;
   --md-sys-color-on-background: #111827;
 
@@ -39,42 +39,42 @@
   --md-sys-color-surface-variant: #e0e7f1;
   --md-sys-color-on-surface-variant: #4b5563;
 
-  /* Outline & borders */
+
   --md-sys-color-outline: #9ca3af;
   --md-sys-color-outline-variant: #cbd5f5;
 
-  /* Error */
+
   --md-sys-color-error: #b91c1c;
   --md-sys-color-on-error: #ffffff;
   --md-sys-color-error-container: #fee2e2;
   --md-sys-color-on-error-container: #450a0a;
 
-  /* Success */
+
   --md-sys-color-success: #16a34a;
   --md-sys-color-on-success: #ffffff;
   --md-sys-color-success-container: #dcfce7;
   --md-sys-color-on-success-container: #052e16;
 
-  /* Elevation (shadows) */
+
   --md-elevation-1: 0 1px 3px rgba(15, 23, 42, 0.18),
     0 1px 2px rgba(15, 23, 42, 0.3);
   --md-elevation-2: 0 10px 30px rgba(15, 23, 42, 0.18);
 
-  /* Radius */
+
   --md-radius-extra-small: 8px;
   --md-radius-small: 12px;
   --md-radius-medium: 16px;
   --md-radius-large: 24px;
   --md-radius-full: 999px;
 
-  /* Spacing */
+
   --md-spacing-xs: 0.5rem;
   --md-spacing-sm: 0.75rem;
   --md-spacing-md: 1rem;
   --md-spacing-lg: 1.5rem;
   --md-spacing-xl: 2rem;
 
-  /* Typography */
+
   --md-font-family: "Plus Jakarta Sans", system-ui, -apple-system,
     BlinkMacSystemFont, "Roboto", "Segoe UI", sans-serif;
 
@@ -213,7 +213,7 @@ img {
   position: relative;
 }
 
-/* Brand */
+
 
 .app-bar__brand {
   display: inline-flex;
@@ -240,7 +240,7 @@ img {
   text-transform: uppercase;
 }
 
-/* Nav container */
+
 
 .app-bar__nav {
   display: flex;
@@ -250,7 +250,7 @@ img {
   flex-wrap: wrap;
 }
 
-/* main links stay in the middle */
+
 .app-bar__nav-main {
   flex: 1;
   display: flex;
@@ -258,7 +258,7 @@ img {
   gap: 1.25rem;
 }
 
-/* auth links on the right of the first row */
+
 .app-bar__nav-auth {
   display: flex;
   align-items: center;
@@ -266,7 +266,7 @@ img {
   margin-left: 1.5rem;
 }
 
-/* admin row always occupies a new line UNDER the first row */
+
 .app-bar__nav-admin {
   display: flex;
   align-items: center;
@@ -289,7 +289,7 @@ img {
   color: var(--md-sys-color-on-surface-variant);
 }
 
-/* Nav links */
+
 
 .nav-link {
   text-decoration: none;
@@ -315,7 +315,7 @@ img {
   font-size: 0.78rem;
 }
 
-/* Primary pill */
+
 
 .nav-link--primary {
   background: linear-gradient(135deg,
@@ -332,7 +332,7 @@ img {
   box-shadow: var(--md-elevation-2);
 }
 
-/* Hamburger for mobile */
+
 
 .app-bar__menu-toggle {
   display: none;
@@ -352,7 +352,7 @@ img {
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-/* Open -> "X" */
+
 
 .app-bar__menu-toggle--open span:nth-child(1) {
   transform: translateY(6px) rotate(45deg);
@@ -516,7 +516,7 @@ img {
   box-shadow: none;
 }
 
-/* Filled primary button */
+
 .btn-primary {
   background: linear-gradient(135deg,
       var(--md-sys-color-primary),
@@ -535,7 +535,7 @@ img {
   box-shadow: var(--md-elevation-2);
 }
 
-/* Subtle outlined button */
+
 .btn-secondary {
   background-color: transparent;
   color: var(--md-sys-color-primary);
@@ -550,7 +550,7 @@ img {
       transparent 92%);
 }
 
-/* Ghost button (used in pricing footers etc) */
+
 .btn-ghost {
   background-color: transparent;
   color: var(--md-sys-color-on-surface-variant);
@@ -563,7 +563,7 @@ img {
       transparent 70%);
 }
 
-/* Circular icon button */
+
 .btn-icon {
   width: 2.4rem;
   height: 2.4rem;
@@ -585,14 +585,14 @@ img {
   border-color: var(--md-sys-color-primary);
 }
 
-/* Small pill */
+
 .btn-sm {
   padding: 0.35rem 0.9rem;
   min-height: 2.1rem;
   font-size: var(--md-font-size-body-sm);
 }
 
-/* Alerts */
+
 
 .alert-error,
 .alert-success {
@@ -645,14 +645,14 @@ img {
   gap: var(--md-spacing-sm);
 }
 
-/* Logged-in: center search card */
+
 
 .hero--center {
   grid-template-columns: minmax(0, 480px);
   justify-content: center;
 }
 
-/* Search card */
+
 
 .search-card {
   background: linear-gradient(145deg,
@@ -664,7 +664,7 @@ img {
   border: 1px solid var(--md-sys-color-outline-variant);
 }
 
-/* Search grid */
+
 
 .search-grid {
   display: grid;
@@ -753,7 +753,7 @@ img {
   margin-top: 0.15rem;
 }
 
-/* row for actions like Save / Edit */
+
 .property-card__actions {
   margin-top: 0.45rem;
   display: flex;
@@ -762,7 +762,7 @@ img {
   align-items: center;
 }
 
-/* Generic section card */
+
 
 .section-card {
   background:
@@ -806,7 +806,7 @@ img {
       var(--md-sys-color-outline-variant) 65%);
 }
 
-/* Section header */
+
 
 .page-header {
   display: flex;
@@ -816,7 +816,7 @@ img {
   margin-bottom: var(--md-spacing-md);
 }
 
-/* Form grid (create/edit property, admin filters) */
+
 
 .form-grid-2 {
   display: grid;
@@ -1071,7 +1071,7 @@ img {
   margin: 0;
 }
 
-/* Profile tabs */
+
 
 .profile-tabs {
   display: flex;
@@ -1110,7 +1110,7 @@ img {
    CHIPS (plans, "Most popular", etc.)
    --------------------------------------------------------------------- */
 
-/* Base chip */
+
 .chip {
   display: inline-flex;
   align-items: center;
@@ -1125,7 +1125,7 @@ img {
   border-style: solid;
 }
 
-/* LIGHT MODE */
+
 .chip--free {
   background-color: rgba(148, 163, 184, 0.18);
   color: #0f172a;
@@ -1144,14 +1144,14 @@ img {
   border-color: rgba(123, 31, 162, 0.85);
 }
 
-/* generic chip (no modifier) uses secondary colors */
+
 .chip:not(.chip--free):not(.chip--pro):not(.chip--agency) {
   background-color: rgba(79, 70, 229, 0.15);
   color: #3730a3;
   border-color: rgba(79, 70, 229, 0.85);
 }
 
-/* DARK MODE OVERRIDES */
+
 @media (prefers-color-scheme: dark) {
   .chip--free {
     background-color: rgba(148, 163, 184, 0.35);
@@ -1182,7 +1182,7 @@ img {
   }
 }
 
-/* Split "My properties" into columns */
+
 .properties-split {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -1242,7 +1242,7 @@ img {
   gap: var(--md-spacing-lg);
 }
 
-/* TOP ROW */
+
 
 .footer__top {
   display: flex;
@@ -1252,7 +1252,7 @@ img {
   flex-wrap: wrap;
 }
 
-/* Brand block */
+
 
 .footer__brand {
   flex: 0 0 auto;
@@ -1272,7 +1272,7 @@ img {
   opacity: 0.96;
 }
 
-/* FOOTER LOGO IMAGE */
+
 .footer__logo {
   width: 40px;
   height: 40px;
@@ -1301,7 +1301,7 @@ img {
   opacity: 0.8;
 }
 
-/* Columns on the right */
+
 
 .footer__columns {
   flex: 1;
@@ -1329,7 +1329,7 @@ img {
   }
 }
 
-/* Lists */
+
 
 .footer__list {
   list-style: none;
@@ -1356,7 +1356,7 @@ img {
   text-decoration: underline;
 }
 
-/* Contact list layout */
+
 
 .footer__list--contact li {
   display: flex;
@@ -1371,7 +1371,7 @@ img {
   opacity: 0.7;
 }
 
-/* BOTTOM ROW */
+
 
 .footer__bottom {
   display: flex;
@@ -1389,7 +1389,7 @@ img {
   }
 }
 
-/* Social icons */
+
 
 .footer__social {
   display: flex;
@@ -1419,7 +1419,7 @@ img {
   background-color: rgba(148, 163, 184, 0.2);
 }
 
-/* Copyright text */
+
 
 .footer__meta {
   font-size: 0.84rem;
@@ -1459,7 +1459,7 @@ img {
   height: 18px;
 }
 
-/* Only show one icon based on data-visible */
+
 .password-toggle .icon-eye-off {
   display: none;
 }
@@ -1476,7 +1476,7 @@ img {
    RESPONSIVE BREAKPOINTS + MOBILE NAV
    --------------------------------------------------------------------- */
 
-/* <= 992px */
+
 @media (max-width: 992px) {
   .container {
     max-width: 100%;
@@ -1503,7 +1503,7 @@ img {
     gap: 4px;
   }
 
-  /* Mobile dropdown nav */
+
   .app-bar__nav {
     position: absolute;
     top: 100%;
@@ -1557,7 +1557,7 @@ img {
   }
 }
 
-/* <= 768px */
+
 @media (max-width: 768px) {
   .hero {
     grid-template-columns: 1fr;
@@ -1629,7 +1629,7 @@ img {
   }
 }
 
-/* <= 480px */
+
 @media (max-width: 480px) {
   .hero__title {
     font-size: 1.5rem;

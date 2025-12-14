@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // --------------------------------------
-  // NAV TOGGLE (hamburger)
-  // --------------------------------------
   var toggle = document.getElementById("navToggle");
   var nav = document.getElementById("mainNav");
 
@@ -13,9 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // --------------------------------------
-  // SAVE / UNSAVE VIA AJAX
-  // --------------------------------------
   var saveForms = document.querySelectorAll(".js-save-form");
 
   saveForms.forEach(function (form) {
@@ -44,7 +38,6 @@ document.addEventListener("DOMContentLoaded", function () {
           button.dataset.saved = savedNow ? "1" : "0";
           button.textContent = savedNow ? "★ Saved" : "☆ Save";
 
-          // Remove card on unsave (for Saved tab)
           if (!savedNow && button.dataset.removeOnUnsave === "1") {
             var card = button.closest(".property-card");
             if (card) card.remove();
@@ -56,9 +49,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // --------------------------------------
-  // SOLD / AVAILABLE VIA AJAX
-  // --------------------------------------
   var soldForms = document.querySelectorAll(".js-sold-form");
 
   soldForms.forEach(function (form) {
@@ -85,10 +75,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
           var isSoldNow = !!data.is_sold;
 
-          // Update button text
           button.textContent = isSoldNow ? "Mark as available" : "Mark as sold";
 
-          // Update availability label
           var card = button.closest(".property-card");
           if (card) {
             var label = card.querySelector("[data-availability-label]");
@@ -97,7 +85,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 "Availability: " + (isSoldNow ? "Sold" : "Available");
             }
 
-            // Remove card if requested
             if (isSoldNow && form.dataset.removeOnSold === "1") {
               card.remove();
             }
@@ -106,7 +93,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           }
 
-          // Update header counters if provided
           if (data.counts) {
             var props = data.counts.properties;
             var sold = data.counts.sold;
@@ -132,9 +118,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // --------------------------------------
-  // ADMIN: PLAN CHANGE VIA AJAX
-  // --------------------------------------
   var planForms = document.querySelectorAll(".js-plan-form");
 
   planForms.forEach(function (form) {
@@ -163,7 +146,6 @@ document.addEventListener("DOMContentLoaded", function () {
               return;
             }
 
-            // Visually mark the selected plan
             buttons.forEach(function (b) {
               b.classList.remove("btn-primary");
               b.style.background = "transparent";
@@ -181,9 +163,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // --------------------------------------
-  // PASSWORD SHOW / HIDE TOGGLE (EYE)
-  // --------------------------------------
   var passwordWrappers = document.querySelectorAll(
     ".js-password-field, .password-field"
   );

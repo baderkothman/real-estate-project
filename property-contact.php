@@ -10,10 +10,10 @@ if ($propertyId <= 0) {
     exit;
 }
 
-// increment stat
+
 incrementPropertyStat($propertyId, 'contact_clicks', $pdo);
 
-// For now: just redirect back to the property
-// (later you can show phone number or open a chat)
+
+
 header('Location: ' . BASE_URL . '/property.php?id=' . $propertyId . '#contact');
 exit;

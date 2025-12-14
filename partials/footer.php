@@ -1,5 +1,5 @@
 <?php
-// partials/footer.php
+
 ?>
 </main>
 

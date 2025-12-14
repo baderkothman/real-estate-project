@@ -16,25 +16,25 @@ $pdo    = getPDO();
 $errors = [];
 $login  = '';   // email or phone
 
-// ---------------------------------------------------------
-// Handle POST (form submit)
-// ---------------------------------------------------------
+
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $login    = trim($_POST['email'] ?? ''); // form field name kept as "email"
     $password = $_POST['password'] ?? '';
     $csrf     = $_POST['csrf_token'] ?? '';
 
-    // 1) CSRF protection
+
     if (!verifyCsrfToken($csrf)) {
         $errors[] = 'Your session has expired. Please reload the page and try again.';
     }
 
-    // 2) Basic validation
+
     if ($login === '' || $password === '') {
         $errors[] = 'Please enter your email/phone and password.';
     }
 
-    // 3) Try authenticating only if we still have no errors
+
     if (!$errors) {
         $stmt = $pdo->prepare('
             SELECT id, name, email, phone, password_hash, role, is_banned, plan
@@ -45,16 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([':identifier' => $login]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Wrong email/phone or password
+
         if (!$user || !password_verify($password, $user['password_hash'])) {
             $errors[] = 'Invalid credentials.';
-        }
-        // Account banned
-        elseif ((int)$user['is_banned'] === 1) {
+        } elseif ((int)$user['is_banned'] === 1) {
             $errors[] = 'This account has been banned. Please contact support if you think this is a mistake.';
-        }
-        // Success: log in
-        else {
+        } else {
             session_regenerate_id(true);
             $_SESSION['user_id']   = (int)$user['id'];
             $_SESSION['user_name'] = $user['name'];
@@ -67,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Optional message when requireLogin() kicks out a banned user
+
 if (isset($_GET['banned']) && empty($errors)) {
     $errors[] = 'Your session was closed because your account is currently banned.';
 }

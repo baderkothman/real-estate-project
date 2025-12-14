@@ -1,5 +1,5 @@
 <?php
-// stripe-success.php
+
 
 declare(strict_types=1);
 
@@ -20,14 +20,14 @@ require_once __DIR__ . '/vendor/autoload.php';
 try {
     $session = \Stripe\Checkout\Session::retrieve($sessionId);
 
-    // Safety: ensure the session belongs to this user
+
     $userIdFromMetadata = isset($session->metadata['user_id'])
         ? (int) $session->metadata['user_id']
         : null;
 
     $planFromMetadata = $session->metadata['plan'] ?? null;
 
-    // We only allow upgrading to 'pro' or 'agency'
+
     if (
         $userIdFromMetadata !== currentUserId()
         || !in_array($planFromMetadata, ['pro', 'agency'], true)
@@ -36,13 +36,13 @@ try {
         exit('Not allowed.');
     }
 
-    // Optionally, check payment status:
+
     if ($session->status !== 'complete') {
         http_response_code(400);
         exit('Payment not completed yet.');
     }
 
-    // Upgrade user plan in DB based on metadata
+
     $newPlan = $planFromMetadata; // 'pro' or 'agency'
 
     $pdo = getPDO();
@@ -52,7 +52,7 @@ try {
         ':id'   => currentUserId(),
     ]);
 
-    // Sync session
+
     setCurrentUserPlan($newPlan);
 
     $planLabel = ($newPlan === 'agency') ? 'Agency' : 'Pro owner';

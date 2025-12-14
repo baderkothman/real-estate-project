@@ -1,5 +1,5 @@
 <?php
-// create-checkout-session.php
+
 
 declare(strict_types=1);
 
@@ -27,10 +27,10 @@ if (!in_array($plan, ['pro', 'agency'], true)) {
     exit('Invalid plan.');
 }
 
-// ---------------------------------------------------------
-// Map (plan, billing) -> Stripe price ID
-// (Fill these constants in config.php with your real IDs.)
-// ---------------------------------------------------------
+
+
+
+
 $priceId = null;
 
 if ($plan === 'pro') {
@@ -64,7 +64,7 @@ if ($priceId === null) {
     exit('Invalid billing period for this plan.');
 }
 
-// Build absolute URLs for success / cancel
+
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
 $domain   = $_SERVER['HTTP_HOST'];
 $baseUrl  = $protocol . $domain . BASE_URL;

@@ -19,21 +19,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        // Look up user by email
+
         $stmt = $pdo->prepare('SELECT id, name, email FROM users WHERE email = :email LIMIT 1');
         $stmt->execute([':email' => $email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Always set sent=true to avoid revealing if email exists
+
         $sent = true;
 
         if ($user) {
-            // 1) Generate token
+
             $token     = bin2hex(random_bytes(32));
             $tokenHash = hash('sha256', $token);
             $expiresAt = (new DateTime('+1 hour'))->format('Y-m-d H:i:s');
 
-            // 2) Store in DB
+
             $stmt = $pdo->prepare('
                 INSERT INTO password_resets (user_id, token_hash, expires_at)
                 VALUES (:uid, :token_hash, :expires_at)
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':expires_at' => $expiresAt,
             ]);
 
-            // 3) Build reset URL (absolute)
+
             $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
             $host   = $_SERVER['HTTP_HOST'] ?? 'localhost';
 
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $resetUrl  = $scheme . '://' . $host . $path;
             $debugResetUrl = $resetUrl; // show on screen for local dev
 
-            // 4) Send email
+
             sendPasswordResetEmail($user['email'], $user['name'], $resetUrl);
         }
     }

@@ -1,26 +1,26 @@
 <?php
-// admin/users.php
-// --------------------------------------------------------------
-// Admin view: manage users
-// - Lists users (non-admin), with property count
-// - Paginated (20 per page)
-// - Sortable columns via ?sort=&dir=
-// - Shows if user is banned or not
-// - Allows ban / unban actions
-// - Allows changing user plan (free / pro / agency)
-// --------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
 
 require_once __DIR__ . '/../config.php';
 
 requireAdmin();
 $pdo = getPDO();
 
-// Allowed plans for controls
+
 $allowedPlans = ['free', 'pro', 'agency'];
 
-// -------------------------------------------------------------------------
-// Small helper: build URL keeping current filters/sort/page
-// -------------------------------------------------------------------------
+
+
+
 function adminUsersUrl(array $overrides = []): string
 {
     $params = [
@@ -38,9 +38,9 @@ function adminUsersUrl(array $overrides = []): string
     return BASE_URL . '/admin/users.php?' . http_build_query($params);
 }
 
-// -------------------------------------------------------------------------
-// Sorting
-// -------------------------------------------------------------------------
+
+
+
 $allowedSorts = [
     'id'          => 'u.id',
     'name'        => 'u.name',
@@ -62,20 +62,20 @@ if (!in_array($dir, ['asc', 'desc'], true)) {
     $dir = 'desc';
 }
 
-// -------------------------------------------------------------------------
-// Pagination
-// -------------------------------------------------------------------------
+
+
+
 $perPage = 20;
 $page    = isset($_GET['page']) ? max(1, (int) $_GET['page']) : 1;
 
-// -------------------------------------------------------------------------
-// Handle POST: change plan
-// -------------------------------------------------------------------------
+
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'change_plan') {
     $csrf   = $_POST['csrf_token'] ?? '';
     $isAjax = isset($_POST['ajax']) && $_POST['ajax'] === '1';
 
-    // Helper to respond as JSON if ajax, else redirect with flash
+
     $respond = function (bool $ok, string $message, ?string $plan = null, ?int $userId = null) use ($isAjax) {
         if ($isAjax) {
             header('Content-Type: application/json');
@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'chang
         $respond(false, 'Error: invalid user or plan.');
     }
 
-    // Update user plan
+
     $stmt = $pdo->prepare('
         UPDATE users
         SET plan = :plan
@@ -125,9 +125,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'chang
     $respond(true, 'User plan updated to ' . ucfirst($plan) . '.', $plan, $userId);
 }
 
-// -------------------------------------------------------------------------
-// Filters (search + banned)
-// -------------------------------------------------------------------------
+
+
+
 $q = trim($_GET['q'] ?? '');
 
 $filter         = $_GET['filter'] ?? 'all';
@@ -136,31 +136,31 @@ if (!in_array($filter, $allowedFilters, true)) {
     $filter = 'all';
 }
 
-// -------------------------------------------------------------------------
-// Build base WHERE and params (used for both count & data queries)
-// -------------------------------------------------------------------------
+
+
+
 $where  = ' WHERE 1=1';
 $params = [];
 
-// Exclude admins entirely
+
 $where .= " AND u.role <> 'admin'";
 
-// Filter by search term
+
 if ($q !== '') {
     $where        .= ' AND (u.name LIKE :q OR u.email LIKE :q)';
     $params[':q'] = '%' . $q . '%';
 }
 
-// Filter by banned state
+
 if ($filter === 'active') {
     $where .= ' AND u.is_banned = 0';
 } elseif ($filter === 'banned') {
     $where .= ' AND u.is_banned = 1';
 }
 
-// -------------------------------------------------------------------------
-// Total count for pagination
-// -------------------------------------------------------------------------
+
+
+
 $countSql = '
     SELECT COUNT(DISTINCT u.id)
     FROM users u
@@ -178,9 +178,9 @@ if ($page > $totalPages) {
 
 $offset = ($page - 1) * $perPage;
 
-// -------------------------------------------------------------------------
-// Data query (with GROUP BY, ORDER BY, LIMIT/OFFSET)
-// -------------------------------------------------------------------------
+
+
+
 $orderBy = $allowedSorts[$sort] . ' ' . strtoupper($dir);
 
 $sql = '
@@ -220,14 +220,14 @@ foreach ($paramsData as $key => $value) {
 $stmt->execute();
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Flash message (e.g., from user-actions or NON-AJAX plan changes)
+
 $adminFlash = $_SESSION['admin_flash'] ?? null;
 unset($_SESSION['admin_flash']);
 
 $pageTitle = 'Admin · Users';
 require_once __DIR__ . '/../partials/header.php';
 
-// Helper for sort headers
+
 function sortHeader(string $label, string $key, string $currentSort, string $currentDir): string
 {
     $isActive = ($currentSort === $key);

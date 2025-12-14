@@ -6,23 +6,23 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// --------------------------------------------------------------------------
-// Stripe configuration (fill with your real keys from Stripe dashboard)
-// --------------------------------------------------------------------------
+
+
+
 const STRIPE_SECRET_KEY = 'YOUR_STRIPE_SECRET_KEY_HERE';
 const STRIPE_PUBLISHABLE_KEY = 'YOUR_STRIPE_PUBLISHABLE_KEY_HERE';
-// Pro product
+
 const STRIPE_PRICE_PRO_MONTH   = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';   // $30 / month (default)
 const STRIPE_PRICE_PRO_QUARTER = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'; // $60 every 3 months
 const STRIPE_PRICE_PRO_YEAR    = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';   // $300 / year
 
-// Agency product
+
 const STRIPE_PRICE_AGENCY_MONTH   = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';   // $60 / month
 const STRIPE_PRICE_AGENCY_QUARTER = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'; // $120 every 3 months
 const STRIPE_PRICE_AGENCY_YEAR    = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';   // $600 / year
 
-// If later you want agency subscriptions, add another price ID:
-// const STRIPE_PRICE_AGENCY_MONTH = 'price_YOUR_AGENCY_PRICE_ID_HERE';
+
+
 
 /**
  * --------------------------------------------------------------------------
@@ -30,7 +30,7 @@ const STRIPE_PRICE_AGENCY_YEAR    = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';   // $600 
  * --------------------------------------------------------------------------
  */
 
-// Project name (used in <title> or header if needed)
+
 const APP_NAME = 'Othman Real Estate';
 
 /**
@@ -109,7 +109,7 @@ if (!empty($_SESSION['user_id'])) {
     $currentUser = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($currentUser) {
-        // Keep session plan in sync with DB
+
         if (!empty($currentUser['plan'])) {
             $_SESSION['user_plan'] = $currentUser['plan'];
         } else {
@@ -118,7 +118,7 @@ if (!empty($_SESSION['user_id'])) {
     }
 
     if (!$currentUser || (int)($currentUser['is_banned'] ?? 0) === 1) {
-        // user deleted or banned while logged-in
+
         session_unset();
         session_destroy();
         session_start();
@@ -279,14 +279,14 @@ function storePropertyImages(int $propertyId, array $files, PDO $pdo): array
 {
     $stored = [];
 
-    // No files? nothing to do
+
     if (!isset($files['name']) || !is_array($files['name'])) {
         return $stored;
     }
 
-    // --------------------------------------------------
-    // 1) Get owner plan + per-plan image limit
-    // --------------------------------------------------
+
+
+
     try {
         $stmtPlan = $pdo->prepare('
             SELECT COALESCE(u.plan, "free") AS owner_plan
@@ -298,16 +298,16 @@ function storePropertyImages(int $propertyId, array $files, PDO $pdo): array
         $stmtPlan->execute([':pid' => $propertyId]);
         $ownerPlan = $stmtPlan->fetchColumn() ?: 'free';
     } catch (Throwable $e) {
-        // Fallback if something goes wrong: treat as free
+
         $ownerPlan = 'free';
     }
 
     $limits    = getPlanLimits($ownerPlan);
     $maxImages = $limits['max_images'] ?? 5;
 
-    // --------------------------------------------------
-    // 2) Count how many images this property already has
-    // --------------------------------------------------
+
+
+
     $stmtCount = $pdo->prepare('
         SELECT COUNT(*) 
         FROM property_images 
@@ -318,13 +318,13 @@ function storePropertyImages(int $propertyId, array $files, PDO $pdo): array
     $remainingSlots = $maxImages - $currentCount;
 
     if ($remainingSlots <= 0) {
-        // Already at or above limit – nothing more allowed
+
         return $stored;
     }
 
-    // --------------------------------------------------
-    // 3) Standard upload logic, but stop at remainingSlots
-    // --------------------------------------------------
+
+
+
     if (!is_dir(UPLOAD_DIR)) {
         mkdir(UPLOAD_DIR, 0777, true);
     }
@@ -340,7 +340,7 @@ function storePropertyImages(int $propertyId, array $files, PDO $pdo): array
 
     foreach ($files['name'] as $idx => $originalName) {
         if ($remainingSlots <= 0) {
-            // Per-plan image limit reached, ignore extra files
+
             break;
         }
 
@@ -348,19 +348,19 @@ function storePropertyImages(int $propertyId, array $files, PDO $pdo): array
         $tmpName = $files['tmp_name'][$idx] ?? '';
         $size    = $files['size'][$idx] ?? 0;
 
-        // Skip empty / invalid uploads
+
         if ($error !== UPLOAD_ERR_OK || !is_uploaded_file($tmpName)) {
             continue;
         }
 
-        // Limit size to 5 MB per file
+
         if ($size > 5 * 1024 * 1024) {
             continue;
         }
 
         $mime = $finfo->file($tmpName);
         if (!isset($allowedMime[$mime])) {
-            // Unsupported file type
+
             continue;
         }
 
@@ -369,11 +369,11 @@ function storePropertyImages(int $propertyId, array $files, PDO $pdo): array
         $target   = rtrim(UPLOAD_DIR, '/\\') . '/' . $fileName;
 
         if (!move_uploaded_file($tmpName, $target)) {
-            // Failed to move uploaded file
+
             continue;
         }
 
-        // Record in property_images table
+
         $stmt = $pdo->prepare('
             INSERT INTO property_images (property_id, file_name) 
             VALUES (:property_id, :file_name)
@@ -469,7 +469,7 @@ function incrementPropertyStat(int $propertyId, string $field, ?PDO $pdo = null)
     $pdo ??= getPDO();
     $today = date('Y-m-d');
 
-    // Insert or update row for today
+
     $sql = "
         INSERT INTO property_stats (property_id, stat_date, {$field})
         VALUES (:pid, :d, 1)
@@ -502,6 +502,6 @@ function sendPasswordResetEmail(string $email, string $name, string $resetUrl): 
 
     $headers = "From: Othman Real Estate <no-reply@Othman-realestate.test>\r\n";
 
-    // Suppress warnings if mail is not configured
+
     @mail($email, $subject, $message, $headers);
 }

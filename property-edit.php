@@ -5,7 +5,7 @@ requireLogin();
 $pdo    = getPDO();
 $userId = currentUserId();
 
-// Property ID (from GET or POST)
+
 $propertyId = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $propertyId = isset($_POST['id']) ? (int) $_POST['id'] : $propertyId;
@@ -24,9 +24,9 @@ if ($propertyId <= 0) {
     exit;
 }
 
-// --------------------------------------------------------------
-// Load property + owner plan
-// --------------------------------------------------------------
+
+
+
 $stmt = $pdo->prepare('
     SELECT 
         p.*,
@@ -56,16 +56,16 @@ if (!$property) {
 $ownerId   = (int) $property['owner_id'];
 $ownerPlan = $property['owner_plan'] ?: 'free';
 
-// Only owner or admin can edit
+
 if ($ownerId !== $userId && !isAdmin()) {
     http_response_code(403);
     echo 'Forbidden';
     exit;
 }
 
-// --------------------------------------------------------------
-// Load existing images
-// --------------------------------------------------------------
+
+
+
 $stmtImg = $pdo->prepare('
     SELECT id, file_name
     FROM property_images
@@ -75,7 +75,7 @@ $stmtImg = $pdo->prepare('
 $stmtImg->execute([':pid' => $propertyId]);
 $images = $stmtImg->fetchAll(PDO::FETCH_ASSOC);
 
-// Plan limits (for info / UI)
+
 $limits        = getPlanLimits($ownerPlan);
 $maxImages     = $limits['max_images'] ?? 5;
 $currentImages = count($images);
@@ -89,9 +89,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!verifyCsrfToken($csrf)) {
         $errors[] = 'Invalid session token. Please reload the page and try again.';
     } else {
-        // ------------------------------------------------------
-        // Read form fields
-        // ------------------------------------------------------
+
+
+
         $title        = trim($_POST['title'] ?? '');
         $city         = trim($_POST['city'] ?? '');
         $address      = trim($_POST['address'] ?? '');
@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $bathrooms    = trim($_POST['bathrooms'] ?? '');
         $areaM2       = trim($_POST['area_m2'] ?? '');
 
-        // Basic validation
+
         if ($title === '') {
             $errors[] = 'Title is required.';
         }
@@ -121,9 +121,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $areaM2    = ($areaM2 !== '' && is_numeric($areaM2)) ? (int) $areaM2 : null;
 
         if (empty($errors)) {
-            // --------------------------------------------------
-            // 1) Update main property data
-            // --------------------------------------------------
+
+
+
             $stmtUpdate = $pdo->prepare('
                 UPDATE properties
                 SET
@@ -153,15 +153,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':uid'          => $ownerId,
             ]);
 
-            // --------------------------------------------------
-            // 2) Delete selected images (if any)
-            // --------------------------------------------------
+
+
+
             if (!empty($_POST['delete_images']) && is_array($_POST['delete_images'])) {
                 $idsToDelete = array_map('intval', $_POST['delete_images']);
                 $idsToDelete = array_filter($idsToDelete, fn($v) => $v > 0);
 
                 if (!empty($idsToDelete)) {
-                    // Fetch file names to remove from disk
+
                     $placeholders = implode(',', array_fill(0, count($idsToDelete), '?'));
 
                     $params = array_merge([$propertyId], $idsToDelete);
@@ -175,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmtFiles->execute($params);
                     $rowsToDelete = $stmtFiles->fetchAll(PDO::FETCH_ASSOC);
 
-                    // Delete physical files
+
                     foreach ($rowsToDelete as $row) {
                         $filePath = rtrim(UPLOAD_DIR, '/\\') . '/' . $row['file_name'];
                         if (is_file($filePath)) {
@@ -183,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }
                     }
 
-                    // Delete DB rows
+
                     $stmtDel = $pdo->prepare("
                         DELETE FROM property_images
                         WHERE property_id = ?
@@ -193,17 +193,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
-            // --------------------------------------------------
-            // 3) Handle new uploads (plan-aware limit is enforced
-            //    inside storePropertyImages())
-            // --------------------------------------------------
+
+
+
+
             if (!empty($_FILES['images']) && isset($_FILES['images']['name']) && is_array($_FILES['images']['name'])) {
                 storePropertyImages($propertyId, $_FILES['images'], $pdo);
             }
 
-            // --------------------------------------------------
-            // 4) Reload property + images + limits for display
-            // --------------------------------------------------
+
+
+
             $stmt = $pdo->prepare('
                 SELECT 
                     p.*,

@@ -3,7 +3,7 @@ require_once __DIR__ . '/config.php';
 
 $pdo = getPDO();
 
-// Owner ID from query
+
 $userId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 if ($userId <= 0) {
     http_response_code(404);
@@ -18,7 +18,7 @@ if ($userId <= 0) {
     exit;
 }
 
-// Load owner (hide banned)
+
 $stmtUser = $pdo->prepare('
     SELECT id, name, email, phone, profile_image, bio, plan, created_at, is_banned
     FROM users
@@ -41,7 +41,7 @@ if (!$owner || !empty($owner['is_banned'])) {
     exit;
 }
 
-// Saved IDs for current viewer (for Save/Unsave buttons)
+
 $savedPropertyIds = [];
 if (isLoggedIn()) {
     $stmtSavedIds = $pdo->prepare('
@@ -53,12 +53,12 @@ if (isLoggedIn()) {
     $savedPropertyIds = $stmtSavedIds->fetchAll(PDO::FETCH_COLUMN);
 }
 
-// Pagination config
+
 $perPage = 12;
 $page    = max(1, (int)($_GET['page'] ?? 1));
 $offset  = ($page - 1) * $perPage;
 
-// Count owner properties (public: approved + not sold)
+
 $countSql = '
     SELECT COUNT(*)
     FROM properties
@@ -75,7 +75,7 @@ if ($page > $totalPages) {
     $offset = ($page - 1) * $perPage;
 }
 
-// Fetch owner properties
+
 $sqlProps = '
     SELECT p.*,
            (
@@ -102,7 +102,7 @@ $properties = $stmtProps->fetchAll(PDO::FETCH_ASSOC);
 $pageTitle = e($owner['name']) . ' · Owner profile';
 require_once __DIR__ . '/partials/header.php';
 
-// Simple pagination helper
+
 function render_user_pagination(int $ownerId, int $current, int $total): void
 {
     if ($total <= 1) {

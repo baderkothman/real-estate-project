@@ -1,6 +1,6 @@
 <?php
-// users.php
-// Public directory of owners / agents (non-admin users) with pagination
+
+
 
 require_once __DIR__ . '/config.php';
 
@@ -22,27 +22,27 @@ if (!function_exists('hr_profile_image_url')) {
             return '';
         }
 
-        // Full URL already
+
         if (preg_match('#^https?://#i', $fileName)) {
             return $fileName;
         }
 
-        // Starts with slash: treat as root-relative under BASE_URL
+
         if ($fileName[0] === '/') {
             return rtrim(BASE_URL, '/') . $fileName;
         }
 
-        // Starts with uploads/... -> prepend BASE_URL
+
         if (strpos($fileName, 'uploads/') === 0) {
             return rtrim(BASE_URL, '/') . '/' . $fileName;
         }
 
-        // Default: just a filename stored in profile table
+
         if (defined('PROFILE_UPLOAD_URL')) {
             return rtrim(PROFILE_UPLOAD_URL, '/') . '/' . ltrim($fileName, '/');
         }
 
-        // Fallback
+
         return rtrim(BASE_URL, '/') . '/uploads/profile/' . ltrim($fileName, '/');
     }
 }
@@ -84,13 +84,13 @@ if ($page < 1) {
 $whereSql = 'WHERE u.role <> "admin" AND (u.is_banned IS NULL OR u.is_banned = 0)';
 $params   = [];
 
-// Search
+
 if ($q !== '') {
     $whereSql .= ' AND (u.name LIKE :q OR u.email LIKE :q)';
     $params[':q'] = '%' . $q . '%';
 }
 
-// Plan filter
+
 if ($plan !== 'all') {
     $whereSql .= ' AND u.plan = :plan';
     $params[':plan'] = $plan;
@@ -138,12 +138,12 @@ $sql = '
 
 $stmt = $pdo->prepare($sql);
 
-// Bind filters
+
 foreach ($params as $key => $value) {
     $stmt->bindValue($key, $value);
 }
 
-// Bind pagination
+
 $stmt->bindValue(':limit', $perPage, PDO::PARAM_INT);
 $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 

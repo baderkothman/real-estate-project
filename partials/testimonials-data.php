@@ -1,5 +1,5 @@
 <?php
-// Fake feedback used on home + about pages
+
 $TESTIMONIALS = [
     [
         'name'     => 'Rami K.',

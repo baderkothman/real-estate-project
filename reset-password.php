@@ -6,7 +6,7 @@ $pdo     = getPDO();
 $errors  = [];
 $success = null;
 
-// Token comes from email link
+
 $token = $_GET['token'] ?? '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $token = $_POST['token'] ?? '';
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errors) && $resetRow) {
         try {
             $pdo->beginTransaction();
 
-            // Update user password
+
             $stmt = $pdo->prepare('
                 UPDATE users
                 SET password_hash = :password_hash
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errors) && $resetRow) {
                 ':uid'           => $resetRow['user_id'],
             ]);
 
-            // Mark token as used
+
             $stmt = $pdo->prepare('
                 UPDATE password_resets
                 SET used = 1

@@ -17,9 +17,9 @@ $name   = '';
 $email  = '';
 $phone  = '';
 
-// ---------------------------------------------------------
-// Handle POST (form submission)
-// ---------------------------------------------------------
+
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name     = trim($_POST['name'] ?? '');
     $email    = trim($_POST['email'] ?? '');
@@ -28,12 +28,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $confirm  = $_POST['password_confirm'] ?? '';
     $csrf     = $_POST['csrf_token'] ?? '';
 
-    // 1) CSRF protection
+
     if (!verifyCsrfToken($csrf)) {
         $errors[] = 'Invalid session token. Please try again.';
     }
 
-    // 2) Basic validation
+
     if ($name === '') {
         $errors[] = 'Name is required.';
     }
@@ -56,11 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Passwords do not match.';
     }
 
-    // 3) Create user if everything is valid
+
     if (!$errors) {
         $pdo = getPDO();
 
-        // Check if email OR phone already exists
+
         $stmt = $pdo->prepare('
             SELECT email, phone
             FROM users
@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-            // Insert new user
+
             $stmt = $pdo->prepare(
                 'INSERT INTO users (name, email, phone, password_hash)
                  VALUES (:name, :email, :phone, :password_hash)'
@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $userId = (int) $pdo->lastInsertId();
 
-            // Auto-login new user
+
             session_regenerate_id(true);
             $_SESSION['user_id']   = $userId;
             $_SESSION['user_name'] = $name;
@@ -110,10 +110,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// CSRF token for the form
+
 $csrfToken = getCsrfToken();
 
-// Page title for header.php
+
 $pageTitle = 'Sign up';
 
 require_once __DIR__ . '/partials/header.php';

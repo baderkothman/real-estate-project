@@ -49,31 +49,31 @@ if ($page < 1) {
 $whereSql = 'WHERE p.status = "approved" AND p.is_sold = 0';
 $params   = [];
 
-// Exclude current user's properties from the search results
+
 if (isLoggedIn()) {
     $whereSql .= ' AND p.user_id <> :current_user_id';
     $params[':current_user_id'] = currentUserId();
 }
 
-// City filter (partial match)
+
 if ($city !== '') {
     $whereSql .= ' AND p.city LIKE :city';
     $params[':city'] = '%' . $city . '%';
 }
 
-// Listing type filter (sale / rent)
+
 if ($type !== '') {
     $whereSql .= ' AND p.listing_type = :type';
     $params[':type'] = $type;
 }
 
-// Minimum price filter
+
 if ($minPrice !== '' && is_numeric($minPrice)) {
     $whereSql .= ' AND p.price >= :min_price';
     $params[':min_price'] = (float) $minPrice;
 }
 
-// Maximum price filter
+
 if ($maxPrice !== '' && is_numeric($maxPrice)) {
     $whereSql .= ' AND p.price <= :max_price';
     $params[':max_price'] = (float) $maxPrice;
@@ -122,12 +122,12 @@ $sql = '
 
 $stmt = $pdo->prepare($sql);
 
-// Bind filter params
+
 foreach ($params as $key => $value) {
     $stmt->bindValue($key, $value);
 }
 
-// Bind pagination params
+
 $stmt->bindValue(':limit', $perPage, PDO::PARAM_INT);
 $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 
@@ -233,7 +233,7 @@ require_once __DIR__ . '/partials/header.php';
         <div class="properties-grid">
             <?php foreach ($properties as $property): ?>
                 <?php
-                // Compute "currently featured" state for the badge
+
                 $isFeaturedNow = false;
                 if (!empty($property['is_featured']) && (int) $property['is_featured'] === 1) {
                     if (empty($property['featured_until'])) {
